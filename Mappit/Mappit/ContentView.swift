@@ -14,7 +14,7 @@ struct ContentView: View {
     @StateObject private var locationManager = LocationManager()
     @State var annotations: [MKPointAnnotation] = []
     
-    @StateObject private var srManager = SRViewModel(serviceRequests: sampleServiceRequests)
+    @StateObject private var srManager = ServiceRequestVM(serviceRequests: sampleServiceRequests)
     
     init(){
         print(srManager.serviceRequests)

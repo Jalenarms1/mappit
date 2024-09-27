@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class SRViewModel: ObservableObject {
+class ServiceRequestVM: ObservableObject {
     var serviceRequests: [ServiceRequest] = []
     
     init(serviceRequests: [ServiceRequest]){
