@@ -6,13 +6,35 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 class ServiceRequestVM: ObservableObject {
-    var serviceRequests: [ServiceRequest] = []
+    @Published var serviceRequests: [ServiceRequest] = []
     
     init(serviceRequests: [ServiceRequest]){
-        
         self.serviceRequests = serviceRequests
+
     }
+    
+    
+    func loadCoordinates() async {
+        for i in serviceRequests.indices {
+            if serviceRequests[i].coordinate == nil {
+                let coord = await serviceRequests[i].getAddrCoordinates()
+                
+                DispatchQueue.main.async {
+                    self.serviceRequests[i].coordinate = coord
+                    
+                }
+                
+            }
+            
+        }
+            
+        
+    }
+    
+    
+    
 }
 

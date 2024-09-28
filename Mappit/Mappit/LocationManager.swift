@@ -10,14 +10,15 @@ import MapKit
 import CoreLocation
 
 let defRegion = MKCoordinateRegion(
-    center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), // Default to San Francisco
+    center: CLLocationCoordinate2D(latitude: 33.4484, longitude: 112.0740),
+//    calculation for tap coordinates wasn't working due to this span not being used as bounds for map
     span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
 )
 
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate, MKMapViewDelegate {
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var locationManager = CLLocationManager()
     
-    @Published var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194)
+    @Published var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: defRegion.center.latitude, longitude: defRegion.center.longitude)
     @Published var region = defRegion
     @Published var camera = MapCameraPosition.region(defRegion)
     @Published var annotationTitle = ""
@@ -33,6 +34,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate, MK
     // CLLocationManagerDelegate method to update location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
+        print(location.coordinate)
         
         // Update the region with the user's current location
         self.region = MKCoordinateRegion(
@@ -58,20 +60,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate, MK
         }
     }
     
-    func getCoordinatesLabel(pinLocation: CLLocationCoordinate2D) async -> String {
-        annotationTitle = ""
-        
-        let location = CLLocation(latitude: pinLocation.latitude, longitude: pinLocation.longitude)
-        
-        let geocoder = CLGeocoder()
-        
-        if let name = try? await geocoder.reverseGeocodeLocation(location).first?.name {
-            annotationTitle = name
-        }
-        
-        return annotationTitle == "" ? "No address found" : annotationTitle
-        
-    }
+    
 }
 
 

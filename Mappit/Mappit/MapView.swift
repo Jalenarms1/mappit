@@ -8,12 +8,11 @@
 import SwiftUI
 import MapKit
 
-@MainActor
 struct MapView: View {
     
     @StateObject private var locationManager = LocationManager()
     
-    @StateObject private var serviceRequestVM = ServiceRequestVM(serviceRequests: sampleServiceRequests)
+    @ObservedObject private var serviceRequestVM = ServiceRequestVM(serviceRequests: sampleServiceRequests)
     
     
     var body: some View {
@@ -23,10 +22,9 @@ struct MapView: View {
                 ForEach(serviceRequestVM.serviceRequests, id: \.id) {r in
                     if let coordinate = r.coordinate {
                         
-                        Marker(coordinate: coordinate) {
-                            Label(r.urgency.rawValue, systemImage: "globe")
+                        Annotation(r.urgency.rawValue, coordinate: coordinate) {
+                            SRAnnotation(urgencyLevel: r.urgency)
                         }
-                        .tint(.yellow)
                         
                     }
                 }
@@ -35,7 +33,6 @@ struct MapView: View {
             .mapControls {
                 MapUserLocationButton()
                 MapPitchToggle()
-                
             }
             .onAppear {
                 Task {
@@ -43,16 +40,9 @@ struct MapView: View {
                 }
             }
         }
-            
-            
     }
-    
-    
 }
-
-
 
 #Preview {
     MapView()
-
 }
