@@ -1,1 +1,84 @@
+# macOS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear during SDK updates
+*.docset
+
+# Build generated files
+build/
+DerivedData/
+*.hmap
+
+# User-specific settings
 xcuserdata/
+*.xcuserstate
+
+# Workspace settings
+*.xcscmblueprint
+
+# Index files
+*.xcuserdatad/
+*.xccheckout
+
+# Swift Package Manager
+/.build/
+/Packages
+/Package.resolved
+# Add if you have submodules
+/Carthage/Checkouts
+/Carthage/Build
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Xcode playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# SwiftPM specific
+*.xcodeproj/
+Package.pins
+.swiftpm/xcode/package.xcworkspace/
+.build/
+.swiftpm/
+.idea
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+fastlane/report.html
+
+# Bundle artifacts
+*.ipa
+*.xcarchive
+
+# Code signing
+*.p12
+*.mobileprovision
+*.provisionprofile
+
+# Assets
+*.xccasset
+
+# Android specific
+.gradle
+local.properties
+.idea/
+.DS_Store
+build/
+*.iml
+.gradle/
+*.idea/
+*.jar
+*.keystore
