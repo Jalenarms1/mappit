@@ -12,7 +12,12 @@ class ServiceRequestVM: ObservableObject {
     @Published var serviceRequests: [ServiceRequest] = []
     
     init(serviceRequests: [ServiceRequest]){
-        self.serviceRequests = serviceRequests
+        self.serviceRequests = serviceRequests.sorted { (a: ServiceRequest, b: ServiceRequest) -> Bool in
+            let urgencyLevel1 = a.urgency == .high ? 1 : a.urgency == .moderate ? 2 : 3
+            let urgencyLevel2 = b.urgency == .high ? 1 : b.urgency == .moderate ? 2 : 3
+            
+            return urgencyLevel1 < urgencyLevel2
+        }
 
     }
     
@@ -24,17 +29,10 @@ class ServiceRequestVM: ObservableObject {
                 
                 DispatchQueue.main.async {
                     self.serviceRequests[i].coordinate = coord
-                    
                 }
-                
             }
             
         }
-            
-        
     }
-    
-    
-    
 }
 

@@ -19,13 +19,13 @@ struct MapView: View {
         ZStack {
             Map(position: $locationManager.camera, interactionModes: .all) {
                 UserAnnotation()
+                
                 ForEach(serviceRequestVM.serviceRequests, id: \.id) {r in
                     if let coordinate = r.coordinate {
                         
-                        Annotation(r.urgency.rawValue, coordinate: coordinate) {
+                        Annotation("", coordinate: coordinate) {
                             SRAnnotation(urgencyLevel: r.urgency)
                         }
-                        
                     }
                 }
             }
@@ -39,6 +39,8 @@ struct MapView: View {
                     await serviceRequestVM.loadCoordinates()
                 }
             }
+            
+            SRQueueView(serviceRequests: serviceRequestVM.serviceRequests)
         }
     }
 }

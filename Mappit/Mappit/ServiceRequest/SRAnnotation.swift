@@ -15,10 +15,12 @@ struct SRAnnotation: View {
         Image(systemName: urgencyLevel.urgencyImage)
             .resizable()
             .foregroundStyle(.white)
-            .frame(width: 50, height: 50)
+            .frame(width: 45, height: 45)
             .padding()
             .background(urgencyLevel.urgencyColor)
             .clipShape(.circle)
+            .shadow(radius: 2)
+        
     }
     
     
