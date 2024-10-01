@@ -33,7 +33,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        print(location.coordinate)
+        
+        self.coordinate = location.coordinate
         
         // Update the region with the user's current location
         self.region = MKCoordinateRegion(
@@ -41,6 +42,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         )
         self.camera = MapCameraPosition.region(self.region)
+        
     }
     
     func requestLocationAuthorization() {
@@ -56,6 +58,15 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         default:
             break
         }
+    }
+    
+    func updLocation(to coordinate: CLLocationCoordinate2D) {
+        self.coordinate = coordinate
+        self.region = MKCoordinateRegion(
+            center: coordinate,
+            span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+        )
+        self.camera = MapCameraPosition.region(self.region)
     }
     
     
